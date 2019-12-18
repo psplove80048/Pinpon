@@ -36,14 +36,26 @@ public class Game extends JFrame implements KeyListener, ActionListener {
         setLocationRelativeTo(null);
         addKeyListener(this);
 
+        initPlayerPos();
+        initPlayerScore();
+        initBallTimer();
+	}
+	
+	private void initPlayerPos() {
         for(int i = 0; i < PLAYER_NUM; i++) {
         	playerPosY[i] = INIT_Y_POS;
         }
         playerPosX[0] = PAD_WIDTH - PAD_OFFSET;
         playerPosX[1] = SCREEN_WIDTH - PAD_WIDTH - PAD_OFFSET;
+	}
+
+	private void initPlayerScore() {
         for(int i = 0; i < PLAYER_NUM; i++) {
         	playerScore[i] = 0;
         }
+	}
+	
+	private void initBallTimer() {
         ballTimer = new Timer(DELAY_MS, this);
         ballTimer.setInitialDelay(190);
         ballTimer.start();
