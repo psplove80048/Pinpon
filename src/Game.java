@@ -68,12 +68,24 @@ public class Game extends JFrame implements KeyListener, ActionListener {
     public void paint(Graphics g) { 
         super.paint(g);
 
-        g.setColor(Color.GREEN);
+        drawPlayerPad(g);
+        drawBall(g);
+        drawScore(g);
+    }
+
+    private void drawPlayerPad(Graphics g) {
+    	g.setColor(Color.GREEN);
         g.fillRect(playerPosX[0], playerPosY[0], PAD_WIDTH, PAD_HEIGHT);
         g.setColor(Color.BLUE);
         g.fillRect(playerPosX[1], playerPosY[1], PAD_WIDTH, PAD_HEIGHT);
-        g.setColor(Color.CYAN);
+    }
+    
+    private void drawBall(Graphics g) {
+    	g.setColor(Color.CYAN);
     	g.fillOval(ballPosX, ballPosY, BALL_RADIUS, BALL_RADIUS);
+    }
+
+    private void drawScore(Graphics g) {
     	g.setColor(Color.BLACK);
     	g.drawString("P1:" + playerScore[0], playerPosX[0], 50);
     	g.drawString("P2:" + playerScore[1], playerPosX[1]-50, 50);
@@ -94,11 +106,15 @@ public class Game extends JFrame implements KeyListener, ActionListener {
 			playerPosY[1] -= playerSpeedY;
 		if( key == KeyEvent.VK_X )
 			playerPosY[1] += playerSpeedY;
+		checkPadPosRange();
+		repaint();
+	}
+
+	private void checkPadPosRange() {
 		for(int i = 0; i < PLAYER_NUM; i++) {
 			if( playerPosY[i] < 0)	playerPosY[i] = 0;
 			if( playerPosY[i] > SCREEN_HEIGHT - PAD_HEIGHT) playerPosY[i] = SCREEN_HEIGHT - PAD_HEIGHT;
 		}
-		repaint();
 	}
 	
 	@Override
